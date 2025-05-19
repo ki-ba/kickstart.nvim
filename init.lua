@@ -51,6 +51,8 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
@@ -142,10 +144,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -194,7 +196,41 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
+  {
+    'FtVim/ft_count_lines.nvim',
+    config = function()
+      require('ft_count_lines').setup {
+        enable_on_start = true, --Default is false
+      }
+    end,
+  },
+  {
+    'hardyrafael17/norminette42.nvim',
+    config = function()
+      local norminette = require 'norminette'
+      norminette.setup {
+        runOnSave = true,
+        maxErrorsToShow = 5,
+        active = true,
+      }
+    end,
+  },
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  {
+    'kporceil/42lyon-header.nvim',
+    cmd = { 'Stdheader' },
+    keys = { '<F1>' },
+    opts = {
+      default_map = true, -- Default mapping <F1> in normal mode.
+      auto_update = true, -- Update header when saving.
+      user = 'kbarru', -- Your user.
+      mail = 'kbarru@student.42lyon.fr', -- Your mail.
+      -- add other options.
+    },
+    config = function(_, opts)
+      require('42header').setup(opts)
+    end,
+  },
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
@@ -615,7 +651,10 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {
+          cmd = { 'clangd' },
+          root_dir = require('lspconfig.util').root_pattern('compile_commands.json', '.git'),
+        },
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -859,7 +898,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'tokyonight-day'
     end,
   },
 
