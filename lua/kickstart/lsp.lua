@@ -1,6 +1,6 @@
-  -- LSP Plugins
+-- LSP Plugins
 return {
-    {
+  {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
     'folke/lazydev.nvim',
@@ -19,7 +19,7 @@ return {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-      { 'williamboman/mason.nvim', opts = {} },
+      { 'williamboman/mason.nvim', build = ':MasonUpdate', config = 'true', opts = {} },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
@@ -162,7 +162,7 @@ return {
           end
         end,
       })
-   -- Diagnostic Config
+      -- Diagnostic Config
       -- See :help vim.diagnostic.Opts
       vim.diagnostic.config {
         severity_sort = true,
@@ -435,5 +435,5 @@ return {
         },
       }
     end,
+  },
 }
-  }

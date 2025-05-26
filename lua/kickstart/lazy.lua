@@ -26,17 +26,25 @@ require('lazy').setup({
   -- plugins split from this file for modularity :
 
   require 'kickstart.plugins.mini-nvim',
-  require 'kickstart.plugins.treesitter',
   require 'kickstart.plugins.which-key',
   require 'kickstart.plugins.telescope',
   require 'kickstart.plugins.todo-comments',
   require 'kickstart.lsp',
+  require 'kickstart.plugins.treesitter',
 
   require 'custom.colortheme',
   require 'custom.plugins.header42',
   require 'custom.plugins.norminette42',
-  require 'custom.plugins.count_lines_42',
-
+  {
+    'FtVim/ft_count_lines.nvim',
+    config = function()
+      vim.api.nvim_create_autocmd('BufReadPost', {
+        callback = function()
+          require('ft_count_lines').setup()
+        end,
+      })
+    end,
+  },
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
