@@ -33,6 +33,7 @@ require('lazy').setup({
   require 'kickstart.plugins.treesitter',
 
   require 'custom.colortheme',
+  require 'custom.plugins.copilot',
   require 'custom.plugins.header42',
   require 'custom.plugins.norminette42',
   {

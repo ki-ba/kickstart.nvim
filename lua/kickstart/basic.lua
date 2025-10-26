@@ -79,6 +79,8 @@ vim.opt.scrolloff = 10
 -- See `:help 'confirm'`
 vim.opt.confirm = true
 
+-- Test for copilot
+vim.g.copilot_node_command = '~/custom_apps/node/usr/bin/node'
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
