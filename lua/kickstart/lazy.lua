@@ -36,6 +36,7 @@ require('lazy').setup({
   require 'custom.plugins.copilot',
   require 'custom.plugins.header42',
   require 'custom.plugins.norminette42',
+  require 'custom.plugins.unified',
   {
     'FtVim/ft_count_lines.nvim',
     config = function()
